@@ -31,7 +31,8 @@ public interface YuangongService extends IService<YuangongEntity> {
    	YuangongView selectView(@Param("ew") Wrapper<YuangongEntity> wrapper);
    	
    	PageUtils queryPage(Map<String, Object> params,Wrapper<YuangongEntity> wrapper);
-   	
 
+
+    PageUtils queryPage2(Map<String, Object> params, Wrapper sort);
 }
 

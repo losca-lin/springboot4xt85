@@ -1,13 +1,13 @@
 package com.entity.view;
 
-import com.entity.YuangongEntity;
-
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.entity.YuangongEntity;
 import org.apache.commons.beanutils.BeanUtils;
-import java.lang.reflect.InvocationTargetException;
 
 import java.io.Serializable;
- 
+import java.lang.reflect.InvocationTargetException;
+
 
 /**
  * 员工
@@ -17,15 +17,16 @@ import java.io.Serializable;
  * @email 
  * @date 2023-05-21 14:56:17
  */
-@TableName("yuangong")
-public class YuangongView  extends YuangongEntity implements Serializable {
+@TableName("yuangongkaoqin")
+public class  YuangongkaoqinView extends YuangongEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@TableField(exist = false)
+	private String gzzsc;
 
-
-	public YuangongView(){
+	public YuangongkaoqinView(){
 	}
- 
- 	public YuangongView(YuangongEntity yuangongEntity){
+
+ 	public YuangongkaoqinView(YuangongEntity yuangongEntity){
  	try {
 			BeanUtils.copyProperties(this, yuangongEntity);
 		} catch (IllegalAccessException | InvocationTargetException e) {

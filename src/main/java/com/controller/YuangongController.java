@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import com.entity.YuangongkaoqinEntity;
+import com.service.YuangongkaoqinService;
 import com.utils.ValidatorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +65,7 @@ public class YuangongController {
 	@IgnoreAuth
 	@RequestMapping(value = "/login")
 	public R login(String username, String password, String captcha, HttpServletRequest request) {
-		YuangongEntity u = yuangongService.selectOne(new EntityWrapper<YuangongEntity>().eq("yuangonggonghao", username));
+		YuangongEntity u = yuangongService.selectOne(new EntityWrapper<YuangongEntity>().eq("yuangonggonghao", username).eq("zhiwei","部长"));
 		if(u==null || !u.getMima().equals(password)) {
 			return R.error("账号或密码不正确");
 		}
@@ -142,11 +144,13 @@ public class YuangongController {
     @RequestMapping("/page2")
     public R page2(@RequestParam Map<String, Object> params,YuangongEntity yuangong,
                   HttpServletRequest request){
-        EntityWrapper<YuangongEntity> ew = new EntityWrapper<YuangongEntity>();
-        PageUtils page = yuangongService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yuangong), params), params));
+        EntityWrapper<YuangongkaoqinEntity> ew = new EntityWrapper<YuangongkaoqinEntity>();
+        PageUtils page = yuangongService.queryPage2(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yuangong), params), params));
 
         return R.ok().put("data", page);
     }
+
+
     
     /**
      * 前端列表
