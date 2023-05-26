@@ -13,6 +13,9 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import com.entity.CaiwuzhichuEntity;
+import com.service.CaiwushouruService;
+import com.service.CaiwuzhichuService;
 import com.utils.ValidatorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +54,8 @@ import java.io.IOException;
 public class YuanliaocaigouController {
     @Autowired
     private YuanliaocaigouService yuanliaocaigouService;
+    @Autowired
+    private CaiwuzhichuService caiwuzhichuService;
 
 
     
@@ -129,10 +134,17 @@ public class YuanliaocaigouController {
      * 后端保存
      */
     @RequestMapping("/save")
+    @Transactional
     public R save(@RequestBody YuanliaocaigouEntity yuanliaocaigou, HttpServletRequest request){
     	yuanliaocaigou.setId(new Date().getTime()+new Double(Math.floor(Math.random()*1000)).longValue());
     	//ValidatorUtils.validateEntity(yuanliaocaigou);
         yuanliaocaigouService.insert(yuanliaocaigou);
+        CaiwuzhichuEntity<Object> caiwuzhichu = new CaiwuzhichuEntity<>();
+        caiwuzhichu.setZhichuleixing("采购");
+        caiwuzhichu.setZhichuneirong("原料采购");
+        caiwuzhichu.setCaiwuzhichu(Integer.valueOf(yuanliaocaigou.getCaigoujiage()));
+        caiwuzhichu.setDengjiriqi(new Date());
+        caiwuzhichuService.insert(caiwuzhichu);
         return R.ok();
     }
     

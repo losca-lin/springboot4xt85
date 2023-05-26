@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import com.entity.CaiwuzhichuEntity;
+import com.service.CaiwuzhichuService;
 import com.utils.ValidatorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,9 @@ import java.io.IOException;
 public class YuangonggongziController {
     @Autowired
     private YuangonggongziService yuangonggongziService;
+
+    @Autowired
+    private CaiwuzhichuService caiwuzhichuService;
 
 
     
@@ -133,10 +138,17 @@ public class YuangonggongziController {
      * 后端保存
      */
     @RequestMapping("/save")
+    @Transactional
     public R save(@RequestBody YuangonggongziEntity yuangonggongzi, HttpServletRequest request){
     	yuangonggongzi.setId(new Date().getTime()+new Double(Math.floor(Math.random()*1000)).longValue());
     	//ValidatorUtils.validateEntity(yuangonggongzi);
         yuangonggongziService.insert(yuangonggongzi);
+        CaiwuzhichuEntity<Object> caiwuzhichu = new CaiwuzhichuEntity<>();
+        caiwuzhichu.setZhichuleixing("工资");
+        caiwuzhichu.setZhichuneirong("员工工资");
+        caiwuzhichu.setCaiwuzhichu(yuangonggongzi.getJine().intValue());
+        caiwuzhichu.setDengjiriqi(new Date());
+        caiwuzhichuService.insert(caiwuzhichu);
         return R.ok();
     }
     

@@ -118,6 +118,26 @@ public class YuangongEntity<T> implements Serializable {
 	@DateTimeFormat
 	private Date addtime;
 
+	private String gzsc;
+
+	private String gzzsc;
+
+	public String getGzsc() {
+		return gzsc;
+	}
+
+	public void setGzsc(String gzsc) {
+		this.gzsc = gzsc;
+	}
+
+	public String getGzzsc() {
+		return gzzsc;
+	}
+
+	public void setGzzsc(String gzzsc) {
+		this.gzzsc = gzzsc;
+	}
+
 	public Date getAddtime() {
 		return addtime;
 	}

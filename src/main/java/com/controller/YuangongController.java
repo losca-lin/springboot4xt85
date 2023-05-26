@@ -138,6 +138,15 @@ public class YuangongController {
 
         return R.ok().put("data", page);
     }
+
+    @RequestMapping("/page2")
+    public R page2(@RequestParam Map<String, Object> params,YuangongEntity yuangong,
+                  HttpServletRequest request){
+        EntityWrapper<YuangongEntity> ew = new EntityWrapper<YuangongEntity>();
+        PageUtils page = yuangongService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yuangong), params), params));
+
+        return R.ok().put("data", page);
+    }
     
     /**
      * 前端列表

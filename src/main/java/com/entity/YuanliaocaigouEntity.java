@@ -118,6 +118,26 @@ public class YuanliaocaigouEntity<T> implements Serializable {
 	@DateTimeFormat
 	private Date addtime;
 
+	private Float jiage;
+
+	private Integer count;
+
+	public Float getJiage() {
+		return jiage;
+	}
+
+	public void setJiage(Float jiage) {
+		this.jiage = jiage;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
 	public Date getAddtime() {
 		return addtime;
 	}

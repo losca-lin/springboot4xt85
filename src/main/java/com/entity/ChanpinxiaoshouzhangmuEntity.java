@@ -93,6 +93,36 @@ public class ChanpinxiaoshouzhangmuEntity<T> implements Serializable {
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat
 	private Date addtime;
+	private String chanpinmingcheng;
+
+	private Float jiage;
+
+	private Integer count;
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public Float getJiage() {
+		return jiage;
+	}
+
+	public void setJiage(Float jiage) {
+		this.jiage = jiage;
+	}
+
+	public String getChanpinmingcheng() {
+		return chanpinmingcheng;
+	}
+
+	public void setChanpinmingcheng(String chanpinmingcheng) {
+		this.chanpinmingcheng = chanpinmingcheng;
+	}
+
 
 	public Date getAddtime() {
 		return addtime;

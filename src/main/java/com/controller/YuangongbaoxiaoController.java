@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
+import com.entity.CaiwuzhichuEntity;
+import com.service.CaiwuzhichuService;
 import com.utils.ValidatorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,9 @@ public class YuangongbaoxiaoController {
     @Autowired
     private YuangongbaoxiaoService yuangongbaoxiaoService;
 
+    @Autowired
+    private CaiwuzhichuService caiwuzhichuService;
+
 
     
 
@@ -63,9 +68,9 @@ public class YuangongbaoxiaoController {
     public R page(@RequestParam Map<String, Object> params,YuangongbaoxiaoEntity yuangongbaoxiao,
 		HttpServletRequest request){
 		String tableName = request.getSession().getAttribute("tableName").toString();
-		if(tableName.equals("yuangong")) {
-			yuangongbaoxiao.setYuangonggonghao((String)request.getSession().getAttribute("username"));
-		}
+		// if(tableName.equals("yuangong")) {
+		// 	yuangongbaoxiao.setYuangonggonghao((String)request.getSession().getAttribute("username"));
+		// }
         EntityWrapper<YuangongbaoxiaoEntity> ew = new EntityWrapper<YuangongbaoxiaoEntity>();
 
 		PageUtils page = yuangongbaoxiaoService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yuangongbaoxiao), params), params));
@@ -161,6 +166,14 @@ public class YuangongbaoxiaoController {
     public R update(@RequestBody YuangongbaoxiaoEntity yuangongbaoxiao, HttpServletRequest request){
         //ValidatorUtils.validateEntity(yuangongbaoxiao);
         yuangongbaoxiaoService.updateById(yuangongbaoxiao);//全部更新
+        if (yuangongbaoxiao.getSfsh().equals("是")){
+            CaiwuzhichuEntity<Object> caiwuzhichu = new CaiwuzhichuEntity<>();
+            caiwuzhichu.setZhichuleixing("报销");
+            caiwuzhichu.setZhichuneirong("员工报销");
+            caiwuzhichu.setCaiwuzhichu(Integer.valueOf(yuangongbaoxiao.getBaoxiaojine()));
+            caiwuzhichu.setDengjiriqi(new Date());
+            caiwuzhichuService.insert(caiwuzhichu);
+        }
         return R.ok();
     }
 
@@ -175,6 +188,14 @@ public class YuangongbaoxiaoController {
             YuangongbaoxiaoEntity yuangongbaoxiao = yuangongbaoxiaoService.selectById(id);
             yuangongbaoxiao.setSfsh(sfsh);
             yuangongbaoxiao.setShhf(shhf);
+            if (yuangongbaoxiao.getSfsh().equals("是")){
+                CaiwuzhichuEntity<Object> caiwuzhichu = new CaiwuzhichuEntity<>();
+                caiwuzhichu.setZhichuleixing("报销");
+                caiwuzhichu.setZhichuneirong("员工报销");
+                caiwuzhichu.setCaiwuzhichu(Integer.valueOf(yuangongbaoxiao.getBaoxiaojine()));
+                caiwuzhichu.setDengjiriqi(new Date());
+                caiwuzhichuService.insert(caiwuzhichu);
+            }
             list.add(yuangongbaoxiao);
         }
         yuangongbaoxiaoService.updateBatchById(list);
